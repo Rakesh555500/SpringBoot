@@ -28,7 +28,7 @@ Here we are using the h2 java inline database and pre-loaded few records into ta
  
 # Specific End points and arguments has been noted below:(Its for reference and all negative scenarios has been handled and binded in response body with HTTP error code)
 
-1.	localhost:8080/registerUser   
+1.	localhost:8080/registerUser (POST)
 
 Json Request Body: 
 {
@@ -42,7 +42,7 @@ Json Response Body:
     "message": "rahul.jha@gmail.com register successfully"
 }
 
-2.	localhost:8080/authenticate
+2.	localhost:8080/authenticate (POST)
 
 Json Request Body:
 {
