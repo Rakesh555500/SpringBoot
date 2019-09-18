@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
- * @author C28278
+ * @author Rakesh
  *
  */
 @Entity

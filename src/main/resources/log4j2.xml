@@ -29,7 +29,6 @@
 		</Logger>
 		<Root level="${applogLevel}">
 			<AppenderRef ref="CONSOLE" />
-
 		</Root>
 	</Loggers>
 </Configuration>
