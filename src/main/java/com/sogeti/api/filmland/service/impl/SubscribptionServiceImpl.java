@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sogeti.api.filmland.exception.SubscriptionAlreadyExistsException;
 import com.sogeti.api.filmland.model.Category;
 import com.sogeti.api.filmland.model.SubsciptionRequest;
 import com.sogeti.api.filmland.model.SubscribeCategory;
@@ -38,13 +39,18 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	private SubscriptionRepository subscriptionRepository;
 
 	@Override
-	public SubscribeCategory subscribeCategory(SubsciptionRequest subsciptionRequest) {
-		UserInfo userinfo = filmLandUserService.findUserByUsername(subsciptionRequest.getEmail());
+	public SubscribeCategory subscribeCategory(SubsciptionRequest subsciptionRequest) throws SubscriptionAlreadyExistsException {
+		UserInfo userInfo = filmLandUserService.findUserByUsername(subsciptionRequest.getEmail());
 		Category category = categoryService.findCategoryByName(subsciptionRequest.getAvailableCategory());
+
+		if (subscriptionRepository.findSubscribption(userInfo.getId(), category.getId()) != null) {
+			throw new SubscriptionAlreadyExistsException(subsciptionRequest.getEmail() + " already subscribed to "
+					+ subsciptionRequest.getAvailableCategory());
+		}
 
 		SubscribeCategory subscribeCategory = new SubscribeCategory();
 		subscribeCategory.setCategory(category);
-		subscribeCategory.setUserinfo(userinfo);
+		subscribeCategory.setUserinfo(userInfo);
 		subscribeCategory.setRemainingContent(category.getAvailableContent());
 		subscribeCategory.setStartDate(new Date());
 
@@ -71,11 +77,11 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 				subscriptionShareRequest.getSubscribedCategory());
 		Category category = categoryService.findCategoryByName(subscriptionShareRequest.getSubscribedCategory());
 		UserInfo customer = filmLandUserService.findUserByUsername(subscriptionShareRequest.getCustomer());
-		
+
 		int remainingContent = subscribedCategory.getRemainingContent() / 2;
 		subscribedCategory.setRemainingContent(remainingContent);
 		subscribedCategory.setSharedWith(1);
-		
+
 		SubscribeCategory updatedSubscription = updateSubscription(subscribedCategory);
 
 		if (updatedSubscription != null) {

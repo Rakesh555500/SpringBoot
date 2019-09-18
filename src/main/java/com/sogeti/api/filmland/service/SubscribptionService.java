@@ -2,6 +2,7 @@ package com.sogeti.api.filmland.service;
 
 import java.util.List;
 
+import com.sogeti.api.filmland.exception.SubscriptionAlreadyExistsException;
 import com.sogeti.api.filmland.model.Category;
 import com.sogeti.api.filmland.model.SubsciptionRequest;
 import com.sogeti.api.filmland.model.SubscribeCategory;
@@ -13,7 +14,7 @@ import com.sogeti.api.filmland.model.SubscriptionShareRequest;
  *
  */
 public interface SubscribptionService {
-	public SubscribeCategory subscribeCategory(SubsciptionRequest subsciptionRequest);
+	public SubscribeCategory subscribeCategory(SubsciptionRequest subsciptionRequest) throws SubscriptionAlreadyExistsException;
 
 	public SubscribeCategory shareSubscription(SubscriptionShareRequest subscriptionShareRequest);
 
