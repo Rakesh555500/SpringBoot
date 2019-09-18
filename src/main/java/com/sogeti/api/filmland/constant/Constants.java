@@ -18,7 +18,7 @@ public class Constants {
 	public static final String TOKEN_REFERENCE = "Bearer ";
 
 	public static final String SUBSCRIPTION_UNSUCCESSFULL = "Subscription unsuccessfull";
-
+	public static final String NOT_EXIST = " not exist";
 	public static final String SUBSCRIPTION_SUCCESSFULL = "Subscription successfull";
 
 }

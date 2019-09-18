@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.api.filmland.exception.SubscriptionAlreadyExistsException;
+import com.sogeti.api.filmland.exception.UserNotExistsException;
 import com.sogeti.api.filmland.model.ApiResponse;
 import com.sogeti.api.filmland.model.Category;
 import com.sogeti.api.filmland.model.SubsciptionRequest;
@@ -37,7 +38,8 @@ public class FilmLandController {
 	private SubscribptionService subscriptionService;
 
 	@GetMapping(value = "/categories")
-	public ResponseEntity<SubscribedCategoriesDto> getSubscribedCategories(@RequestParam("username") String username) {
+	public ResponseEntity<SubscribedCategoriesDto> getSubscribedCategories(@RequestParam("username") String username)
+			throws UserNotExistsException {
 		SubscribedCategoriesDto subscribedCategories = new SubscribedCategoriesDto();
 		List<Category> categories = subscriptionService.findAvailableCategoriesForSubscription(username);
 		List<SubscribeCategory> subsCategories = subscriptionService.findSubscriptionsByUsername(username);
@@ -47,7 +49,8 @@ public class FilmLandController {
 	}
 
 	@PostMapping(value = "/subscribe")
-	public ResponseEntity<ApiResponse> subscribeCategory(@RequestBody SubsciptionRequest subsciptionRequest) throws SubscriptionAlreadyExistsException {
+	public ResponseEntity<ApiResponse> subscribeCategory(@RequestBody SubsciptionRequest subsciptionRequest)
+			throws SubscriptionAlreadyExistsException, UserNotExistsException {
 		SubscribeCategory subscribedCategory = subscriptionService.subscribeCategory(subsciptionRequest);
 		ApiResponse apiResponse = new ApiResponse();
 		if (subscribedCategory != null) {
@@ -63,8 +66,8 @@ public class FilmLandController {
 	}
 
 	@PostMapping(value = "/shareSubscription")
-	public ResponseEntity<ApiResponse> shareSubscription(
-			@RequestBody SubscriptionShareRequest subscriptionShareRequest) {
+	public ResponseEntity<ApiResponse> shareSubscription(@RequestBody SubscriptionShareRequest subscriptionShareRequest)
+			throws UserNotExistsException {
 		SubscribeCategory subscribedCategory = subscriptionService.shareSubscription(subscriptionShareRequest);
 		ApiResponse apiResponse = new ApiResponse();
 		if (subscribedCategory != null) {

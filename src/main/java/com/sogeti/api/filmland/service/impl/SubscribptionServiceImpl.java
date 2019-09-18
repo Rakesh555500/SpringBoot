@@ -3,6 +3,8 @@
  */
 package com.sogeti.api.filmland.service.impl;
 
+import static com.sogeti.api.filmland.constant.Constants.NOT_EXIST;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sogeti.api.filmland.exception.SubscriptionAlreadyExistsException;
+import com.sogeti.api.filmland.exception.UserNotExistsException;
 import com.sogeti.api.filmland.model.Category;
 import com.sogeti.api.filmland.model.SubsciptionRequest;
 import com.sogeti.api.filmland.model.SubscribeCategory;
@@ -29,6 +32,7 @@ import com.sogeti.api.filmland.service.SubscribptionService;
  */
 @Service
 public class SubscribptionServiceImpl implements SubscribptionService {
+
 	@Autowired
 	private FilmLandUserService filmLandUserService;
 
@@ -39,9 +43,14 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	private SubscriptionRepository subscriptionRepository;
 
 	@Override
-	public SubscribeCategory subscribeCategory(SubsciptionRequest subsciptionRequest) throws SubscriptionAlreadyExistsException {
+	public SubscribeCategory subscribeCategory(SubsciptionRequest subsciptionRequest)
+			throws SubscriptionAlreadyExistsException, UserNotExistsException {
 		UserInfo userInfo = filmLandUserService.findUserByUsername(subsciptionRequest.getEmail());
 		Category category = categoryService.findCategoryByName(subsciptionRequest.getAvailableCategory());
+
+		if (userInfo == null) {
+			throw new UserNotExistsException(subsciptionRequest.getEmail() + NOT_EXIST);
+		}
 
 		if (subscriptionRepository.findSubscribption(userInfo.getId(), category.getId()) != null) {
 			throw new SubscriptionAlreadyExistsException(subsciptionRequest.getEmail() + " already subscribed to "
@@ -58,9 +67,12 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	}
 
 	@Override
-	public List<SubscribeCategory> findSubscriptionsByUsername(String username) {
-		UserInfo user = filmLandUserService.findUserByUsername(username);
-		return subscriptionRepository.findSubscribptionsByUserId(user.getId());
+	public List<SubscribeCategory> findSubscriptionsByUsername(String username) throws UserNotExistsException {
+		UserInfo userInfo = filmLandUserService.findUserByUsername(username);
+		if (userInfo == null) {
+			throw new UserNotExistsException(username + NOT_EXIST);
+		}
+		return subscriptionRepository.findSubscribptionsByUserId(userInfo.getId());
 	}
 
 	@Override
@@ -72,11 +84,16 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	}
 
 	@Override
-	public SubscribeCategory shareSubscription(SubscriptionShareRequest subscriptionShareRequest) {
+	public SubscribeCategory shareSubscription(SubscriptionShareRequest subscriptionShareRequest)
+			throws UserNotExistsException {
 		SubscribeCategory subscribedCategory = findSubscription(subscriptionShareRequest.getEmail(),
 				subscriptionShareRequest.getSubscribedCategory());
 		Category category = categoryService.findCategoryByName(subscriptionShareRequest.getSubscribedCategory());
 		UserInfo customer = filmLandUserService.findUserByUsername(subscriptionShareRequest.getCustomer());
+
+		if (customer == null) {
+			throw new UserNotExistsException(subscriptionShareRequest.getCustomer() + NOT_EXIST);
+		}
 
 		int remainingContent = subscribedCategory.getRemainingContent() / 2;
 		subscribedCategory.setRemainingContent(remainingContent);
