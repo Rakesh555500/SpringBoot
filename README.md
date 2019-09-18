@@ -26,7 +26,7 @@ Here we are using the h2 java inline database and pre-loaded few records into ta
  Used Spring spring scheduler to run and send payment notification if the start date of subsciber service is more than a month.
  
  
-# Specific End points and arguments has been noted below:(Its for reference and all negative scenarios has been handled and binded in response body with HTTP error code)
+# REST End points and arguments has been noted below:
 
 1.	User Registration service
 
