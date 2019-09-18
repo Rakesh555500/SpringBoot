@@ -58,14 +58,14 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	}
 
 	@Override
-	public List<SubscribeCategory> findSubscribptionsByUsername(String username) {
+	public List<SubscribeCategory> findSubscriptionsByUsername(String username) {
 		UserInfo user = filmLandUserService.findUserByUsername(username);
 		return subscriptionRepository.findSubscribptionsByUserId(user.getId());
 	}
 
 	@Override
-	public List<SubscribeCategory> findAllSubscribptions() {
-		Iterable<SubscribeCategory> itr = subscriptionRepository.findAll();
+	public List<SubscribeCategory> findAllSubscriptions() {
+		Iterable<SubscribeCategory> itr = subscriptionRepository.findAllSubscribptions();
 		List<SubscribeCategory> subscriptions = new ArrayList<>();
 		itr.forEach(item -> subscriptions.add(item));
 		return subscriptions;
@@ -73,7 +73,7 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 
 	@Override
 	public SubscribeCategory shareSubscription(SubscriptionShareRequest subscriptionShareRequest) {
-		SubscribeCategory subscribedCategory = findSubscribption(subscriptionShareRequest.getEmail(),
+		SubscribeCategory subscribedCategory = findSubscription(subscriptionShareRequest.getEmail(),
 				subscriptionShareRequest.getSubscribedCategory());
 		Category category = categoryService.findCategoryByName(subscriptionShareRequest.getSubscribedCategory());
 		UserInfo customer = filmLandUserService.findUserByUsername(subscriptionShareRequest.getCustomer());
@@ -99,7 +99,7 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	}
 
 	@Override
-	public SubscribeCategory findSubscribption(String username, String subscribedCategory) {
+	public SubscribeCategory findSubscription(String username, String subscribedCategory) {
 		UserInfo userInfo = filmLandUserService.findUserByUsername(username);
 		Category category = categoryService.findCategoryByName(subscribedCategory);
 		return subscriptionRepository.findSubscribption(userInfo.getId(), category.getId());
@@ -111,7 +111,7 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	}
 
 	@Override
-	public List<Category> findAvailableCategoriesForSubscribption(String username) {
+	public List<Category> findAvailableCategoriesForSubscription(String username) {
 		UserInfo userInfo = filmLandUserService.findUserByUsername(username);
 		return subscriptionRepository.findAvailableCategoriesForSubscribption(userInfo.getId());
 	}

@@ -20,12 +20,12 @@ public interface SubscribptionService {
 
 	public SubscribeCategory updateSubscription(SubscribeCategory subscribeCategory);
 
-	public List<SubscribeCategory> findSubscribptionsByUsername(String username);
+	public List<SubscribeCategory> findSubscriptionsByUsername(String username);
 
-	public List<SubscribeCategory> findAllSubscribptions();
+	public List<SubscribeCategory> findAllSubscriptions();
 
-	public SubscribeCategory findSubscribption(String username, String subscribedCategory);
+	public SubscribeCategory findSubscription(String username, String subscribedCategory);
 	
-	public List<Category> findAvailableCategoriesForSubscribption(String username);
+	public List<Category> findAvailableCategoriesForSubscription(String username);
 
 }

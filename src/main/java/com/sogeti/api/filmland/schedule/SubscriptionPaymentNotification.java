@@ -33,11 +33,16 @@ public class SubscriptionPaymentNotification {
 	 */
 	@Scheduled(cron = Constants.CRON_EXPRESSION)
 	public void notifyUserForPayments() {
-		List<SubscribeCategory> subscribedCategories = subscribeService.findAllSubscribptions();
+		List<SubscribeCategory> subscribedCategories = subscribeService.findAllSubscriptions();
 		subscribedCategories.forEach(subscribedCategory -> {
 			if (isBeforeMonths(-1, subscribedCategory.getStartDate())) {
 				String username = subscribedCategory.getUserinfo().getUsername();
-				double paymentAmount = subscribedCategory.getCategory().getPrice() / subscribedCategory.getSharedWith();
+				double paymentAmount;
+				if (subscribedCategory.getSharedWith() == 0) {
+					paymentAmount = subscribedCategory.getCategory().getPrice();
+				} else {
+					paymentAmount = subscribedCategory.getCategory().getPrice() / subscribedCategory.getSharedWith();
+				}
 				LOGGER.info("PaymentNotification: Mail has been sent to subscriber {} for monthly payment of {}",
 						username, paymentAmount);
 			}

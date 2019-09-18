@@ -17,4 +17,7 @@ public interface SubscriptionRepository extends CrudRepository<SubscribeCategory
 
 	@Query("SELECT c FROM Category c WHERE c.id NOT IN (SELECT s.category.id FROM SubscribeCategory s WHERE s.userinfo.id=:userId)")
 	public List<Category> findAvailableCategoriesForSubscribption(Long userId);
+
+	@Query("SELECT s FROM SubscribeCategory s")
+	public List<SubscribeCategory> findAllSubscribptions();
 }

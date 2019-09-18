@@ -39,8 +39,8 @@ public class FilmLandController {
 	@GetMapping(value = "/categories")
 	public ResponseEntity<SubscribedCategoriesDto> getSubscribedCategories(@RequestParam("username") String username) {
 		SubscribedCategoriesDto subscribedCategories = new SubscribedCategoriesDto();
-		List<Category> categories = subscriptionService.findAvailableCategoriesForSubscribption(username);
-		List<SubscribeCategory> subsCategories = subscriptionService.findSubscribptionsByUsername(username);
+		List<Category> categories = subscriptionService.findAvailableCategoriesForSubscription(username);
+		List<SubscribeCategory> subsCategories = subscriptionService.findSubscriptionsByUsername(username);
 		subscribedCategories.setAvailableCategories(categories);
 		subscribedCategories.setSubscribedCategories(SubscribedCategoryDto.fromEntityList(subsCategories));
 		return ResponseEntity.ok(subscribedCategories);
