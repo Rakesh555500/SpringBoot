@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sogeti.api.filmland.exception.SubscriptionAlreadyExistsException;
 import com.sogeti.api.filmland.model.ApiResponse;
 import com.sogeti.api.filmland.model.Category;
 import com.sogeti.api.filmland.model.SubsciptionRequest;
@@ -46,7 +47,7 @@ public class FilmLandController {
 	}
 
 	@PostMapping(value = "/subscribe")
-	public ResponseEntity<ApiResponse> subscribeCategory(@RequestBody SubsciptionRequest subsciptionRequest) {
+	public ResponseEntity<ApiResponse> subscribeCategory(@RequestBody SubsciptionRequest subsciptionRequest) throws SubscriptionAlreadyExistsException {
 		SubscribeCategory subscribedCategory = subscriptionService.subscribeCategory(subsciptionRequest);
 		ApiResponse apiResponse = new ApiResponse();
 		if (subscribedCategory != null) {
