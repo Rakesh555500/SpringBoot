@@ -15,6 +15,7 @@ import com.sogeti.api.filmland.model.SubscribeCategory;
 import com.sogeti.api.filmland.service.SubscribptionService;
 
 /**
+ * Payment notification is scheduled using spring scheduler
  * 
  * @author Rakesh
  *
@@ -27,9 +28,8 @@ public class SubscriptionPaymentNotification {
 	private SubscribptionService subscribeService;
 
 	/**
-	 * This method will run the scheduler in each 10 Sec interval to fetch the over
-	 * due subscription user
-	 * 
+	 * This method will run the scheduler in each min interval to fetch
+	 * subscriptions made and send payment notification
 	 */
 	@Scheduled(cron = Constants.CRON_EXPRESSION)
 	public void notifyUserForPayments() {
@@ -55,12 +55,12 @@ public class SubscriptionPaymentNotification {
 	 * in 0/1(boolean)
 	 * 
 	 * @param months Contain the start date of subscription month
-	 * @param aDate  Contain the start date of subscription date
+	 * @param date  Contain the start date of subscription date
 	 * @return return true or false after date calculation
 	 */
-	private boolean isBeforeMonths(int months, Date aDate) {
+	private boolean isBeforeMonths(int months, Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.MONTH, months);
-		return aDate.compareTo(calendar.getTime()) < 0;
+		return date.compareTo(calendar.getTime()) < 0;
 	}
 }
