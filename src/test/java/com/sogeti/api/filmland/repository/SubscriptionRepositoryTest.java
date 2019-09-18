@@ -49,7 +49,7 @@ public class SubscriptionRepositoryTest {
 		SubscribeCategory found = subscriptionRepository.findSubscribption(1L, 2L);
 		assertNull("Subscription is present", found);
 	}
-	
+
 	@Test
 	public void whenFindAvailableCategoriesForUser_thenReturnCategory() {
 		List<Category> found = subscriptionRepository.findAvailableCategoriesForSubscribption(1L);
@@ -62,5 +62,12 @@ public class SubscriptionRepositoryTest {
 		List<Category> found = subscriptionRepository.findAvailableCategoriesForSubscribption(2L);
 		assertNotNull("Categories not present", found);
 		assertThat(found.size()).isEqualTo(3);
+	}
+
+	@Test
+	public void whenFindAllSubscriptions_thenReturnAllSubscriptions() {
+		List<SubscribeCategory> found = subscriptionRepository.findAllSubscribptions();
+		assertNotNull("Subscriptions not present", found);
+		assertThat(found.size()).isEqualTo(1);
 	}
 }
