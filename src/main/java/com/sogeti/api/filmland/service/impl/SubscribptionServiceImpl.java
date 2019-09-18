@@ -116,9 +116,12 @@ public class SubscribptionServiceImpl implements SubscribptionService {
 	}
 
 	@Override
-	public SubscribeCategory findSubscription(String username, String subscribedCategory) {
+	public SubscribeCategory findSubscription(String username, String subscribedCategory) throws UserNotExistsException {
 		UserInfo userInfo = filmLandUserService.findUserByUsername(username);
 		Category category = categoryService.findCategoryByName(subscribedCategory);
+		if (userInfo == null) {
+			throw new UserNotExistsException(username + NOT_EXIST);
+		}
 		return subscriptionRepository.findSubscribption(userInfo.getId(), category.getId());
 	}
 

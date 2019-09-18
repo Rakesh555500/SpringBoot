@@ -25,7 +25,7 @@ public interface SubscribptionService {
 
 	public List<SubscribeCategory> findAllSubscriptions();
 
-	public SubscribeCategory findSubscription(String username, String subscribedCategory);
+	public SubscribeCategory findSubscription(String username, String subscribedCategory) throws UserNotExistsException;
 	
 	public List<Category> findAvailableCategoriesForSubscription(String username);
 
