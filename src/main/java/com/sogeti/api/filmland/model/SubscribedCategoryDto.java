@@ -1,7 +1,6 @@
 package com.sogeti.api.filmland.model;
 
-import static com.sogeti.api.filmland.constant.Constants.SIMPLE_DATE_FORMAT;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,8 @@ public class SubscribedCategoryDto {
 		dto.setName(subscribeCategory.getCategory().getName());
 		dto.setRemainingContent(subscribeCategory.getRemainingContent());
 		dto.setPrice(subscribeCategory.getCategory().getPrice());
-		dto.setStartDate(SIMPLE_DATE_FORMAT.format(subscribeCategory.getStartDate()));
+		SimpleDateFormat simpleDateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+		dto.setStartDate(simpleDateFormatter.format(subscribeCategory.getStartDate()));
 		return dto;
 	}
 
