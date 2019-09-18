@@ -9,8 +9,8 @@
 		<version>2.1.8.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sogeti</groupId>
-	<artifactId>FilmLandSolution</artifactId>
+	<groupId>com.sogeti.api</groupId>
+	<artifactId>filmlandsolution</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FilmLandSolution</name>
 	<description>Demo project for Spring Boot</description>
