@@ -28,7 +28,9 @@ Here we are using the h2 java inline database and pre-loaded few records into ta
  
 # Specific End points and arguments has been noted below:(Its for reference and all negative scenarios has been handled and binded in response body with HTTP error code)
 
-1.	localhost:8080/registerUser (POST)
+1.	User Registration service
+
+Endpoint url:	localhost:8080/registerUser (POST)
 
 Json Request Body: 
 {
@@ -42,7 +44,9 @@ Json Response Body:
     "message": "rahul.jha@gmail.com register successfully"
 }
 
-2.	localhost:8080/authenticate (POST)
+2.	User Login service
+
+Endpoint url:	localhost:8080/authenticate (POST)
 
 Json Request Body:
 {
@@ -57,7 +61,9 @@ Json Response Body:
     "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYWtlc2guZ293ZGFAZ21haWwuY29tIiwiZXhwIjoxNTY4Nzg1MjU4LCJpYXQiOjE1Njg3NjcyNTh9.E39F5SejtcIS1kl1UGG66Vkp7tKr0K4XYMRL-IytgN_Q_9zDvgZK7Dh2X-JfjXiwP832XDPfJaE3oywROyIu2g"
 }
 
-3.	localhost:8080/categories?username=rakesh.gowda@gmail.com  (GET Request)
+3.	Categories service
+
+Endpoint url:	localhost:8080/categories?username=rakesh.gowda@gmail.com  (GET Request)
 
 Headers: 
 	Authorization : accessToken starting with reference keyword 'Bearer '
@@ -86,7 +92,9 @@ Response Body:
     ]
 }
 
-4.	localhost:8080/subscribe  (POST)
+4.	Subscribe service
+
+Endpoint url:	localhost:8080/subscribe  (POST)
 
 Headers: 
 	Authorization : accessToken starting with reference keyword 'Bearer '
@@ -103,7 +111,9 @@ Json Response Body:
     "message": "rakesh.gowda@gmail.com subscribed to category Dutch Films"
 }
 
-5.	localhost:8080/shareSubscription (POST)
+5.	Subscribe Share service
+
+Endpoint url:	localhost:8080/shareSubscription (POST)
 
 Headers: 
 	Authorization : accessToken starting with reference keyword 'Bearer '
