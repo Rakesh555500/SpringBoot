@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.sogeti.api.filmland.model.Category;
 import com.sogeti.api.filmland.model.SubscribeCategory;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +33,7 @@ public class SubscriptionRepositoryTest {
 	@Test
 	public void whenFindByUserId_thenReturnNull() {
 		List<SubscribeCategory> found = subscriptionRepository.findSubscribptionsByUserId(2L);
-		assertNull("Subscriptions is present", found);
+		assertThat(found.size()).isEqualTo(0);
 	}
 
 	@Test
@@ -47,5 +48,19 @@ public class SubscriptionRepositoryTest {
 	public void whenFindByUserIdAndCategoryId_thenReturnNull() {
 		SubscribeCategory found = subscriptionRepository.findSubscribption(1L, 2L);
 		assertNull("Subscription is present", found);
+	}
+	
+	@Test
+	public void whenFindAvailableCategoriesForUser_thenReturnCategory() {
+		List<Category> found = subscriptionRepository.findAvailableCategoriesForSubscribption(1L);
+		assertNotNull("Categories not present", found);
+		assertThat(found.size()).isEqualTo(2);
+	}
+
+	@Test
+	public void whenFindAvailableCategoriesForUser_thenReturnAllCategories() {
+		List<Category> found = subscriptionRepository.findAvailableCategoriesForSubscribption(2L);
+		assertNotNull("Categories not present", found);
+		assertThat(found.size()).isEqualTo(3);
 	}
 }
